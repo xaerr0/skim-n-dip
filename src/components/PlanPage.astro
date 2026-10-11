@@ -1,0 +1,75 @@
+﻿---
+import Base from "../layouts/Base.astro";
+import PageHead from "./PageHead.astro";
+import Icon from "./Icon.astro";
+import Reviews from "./Reviews.astro";
+import QuoteSection from "./QuoteSection.astro";
+import { plans, planRows, planFinePrint, type PlanId } from "../data/site";
+
+interface Props {
+  id: PlanId;
+  title: string;
+  description: string;
+}
+const { id, title, description } = Astro.props;
+const i = plans.findIndex((p) => p.id === id);
+const plan = plans[i];
+const others = plans.filter((p) => p.id !== id);
+const included = planRows.filter((r) => r.has[i]);
+const excluded = planRows.filter((r) => !r.has[i]);
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: `${plan.name} weekly pool service`,
+  serviceType: "Weekly pool maintenance",
+  provider: { "@id": "https://www.skimndipllc.com/#business" },
+  areaServed: "Contra Costa County and the Tri-Valley, CA",
+  description: plan.summary,
+};
+---
+<Base title={title} description={description} schema={[service]}>
+  <PageHead title={plan.name} ft="3" crumbs={[{ href: "/services", label: "Services" }]}>
+    <p><b>{plan.who}</b> {plan.summary}</p>
+  </PageHead>
+
+  <section class="band plaster">
+    <div class="wrap two">
+      <div class="prose">
+        <h2>Every visit</h2>
+        <ul class="list">
+          {included.map((r) => <li>{r.label}{r.note && <> ({r.note.replace(/\.$/, "").toLowerCase()})</>}</li>)}
+        </ul>
+        {excluded.length > 0 && (
+          <>
+            <h2>Not in this plan</h2>
+            <ul class="list">
+              {excluded.map((r) => <li>{r.label}</li>)}
+            </ul>
+          </>
+        )}
+        <slot />
+        <ul class="fine">
+          {planFinePrint.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+      <aside>
+        <h2>Other weekly plans</h2>
+        <nav class="plan-links stack" aria-label="Other weekly plans">
+          {others.map((p) => (
+            <a href={p.href}><b>{p.name}</b><span>{p.who}</span></a>
+          ))}
+          <a href="/services#weekly"><b>Compare all three</b><span>Side by side, row by row.</span></a>
+        </nav>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band water">
+    <div class="wrap">
+      <h2 class="section-h">From weekly customers</h2>
+      <Reviews topics={["weekly", "switch"]} limit={4} />
+    </div>
+  </section>
+
+  <QuoteSection heading={`Get a ${plan.name} quote`} />
+</Base>

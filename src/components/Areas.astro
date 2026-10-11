@@ -1,0 +1,15 @@
+---
+import { cities, regions } from "../data/site";
+---
+<div class="areas">
+  {regions.map((r) => (
+    <div>
+      <h3>{r}</h3>
+      <ul>
+        {cities.filter((c) => c.region === r).map((c) => (
+          <li><a href={`/${c.slug}`}>{c.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Crew from "../components/Crew.astro";
+import Reviews from "../components/Reviews.astro";
+import { biz } from "../data/site";
+---
+<Base
+  title="About Skim n' Dip | East Bay Pool Service Since 2013"
+  description="Skim n' Dip was founded in 2013 by Nick Eisenbart. A Concord pool service company with a staffed office, a licensed contractor's license and a Hayward and Pentair warranty station."
+>
+  <PageHead title="About Skim n' Dip">
+    <p>
+      Nick Eisenbart started Skim n' Dip in {biz.founded}. The company now runs weekly service routes across Contra
+      Costa County and the Tri-Valley, with a repair and install tech and an office that answers calls and texts.
+    </p>
+  </PageHead>
+
+  <section class="band plaster">
+    <div class="wrap two">
+      <div class="prose">
+        <h2>How it works</h2>
+        <p>
+          A tech comes on your service day every week. You get a text when they're on the way and another when
+          they're done, and a text and email report with photos of the work.
+        </p>
+        <p>
+          When something breaks, the repair is done by Skim n' Dip too. It's a Hayward and Pentair warranty station,
+          and the owner still comes out to bigger jobs.
+        </p>
+        <h2>The details</h2>
+        <ul class="list">
+          <li>Founded in {biz.founded}</li>
+          <li>California contractor license <a href={biz.licenseUrl} rel="noopener">#{biz.license}</a></li>
+          <li>Hayward and Pentair warranty station</li>
+          <li>Office open {biz.hours}, by phone, text and email</li>
+          <li>Based at {biz.street}, {biz.city}</li>
+        </ul>
+      </div>
+      <figure class="pull">
+        <blockquote>
+          I really appreciate Nick and the Team at Skim N Dip. They're very responsive and you can talk to the owner
+          directly about your issues.
+        </blockquote>
+        <figcaption><b>Ronnie Taylor</b>, Google review</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band water" aria-labelledby="crew-h">
+    <div class="wrap">
+      <div class="crew-head">
+        <h2 id="crew-h">The crew</h2>
+        <p><a href="/meet-the-team">Meet the team</a></p>
+      </div>
+      <Crew />
+    </div>
+  </section>
+
+  <section class="band water deep">
+    <div class="wrap">
+      <h2 class="section-h">What customers say</h2>
+      <Reviews limit={4} />
+    </div>
+  </section>
+</Base>

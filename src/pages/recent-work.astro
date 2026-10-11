@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Reviews from "../components/Reviews.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+import poolAndSpa from "../assets/pool-and-spa.jpg";
+import shell from "../assets/new-pool-shell.jpg";
+import { biz, remodel } from "../data/site";
+---
+<Base
+  title="Pool Remodels, Replaster and New Pools | Skim n' Dip"
+  description="Replastering, waterline tile, remodels and new pool construction in Contra Costa and the Tri-Valley from Skim n' Dip, licensed contractor #1072978. Call (925) 348-5609."
+>
+  <PageHead title="Remodels and new pools" ft="8">
+    <p>
+      Replaster, new waterline tile, drains brought up to code, a remodel or a new pool from the ground up. Built by
+      a licensed contractor (#{biz.license}) that also services pools every week, so it can look after the pool
+      once it's done.
+    </p>
+  </PageHead>
+
+  <section class="band plaster">
+    <div class="wrap work">
+      <figure class="photo big">
+        <Image src={poolAndSpa} alt="A finished pool with an attached raised spa, glass waterline tile and a spillover into the pool" widths={[640, 960, 1280]} sizes="(max-width: 52rem) 92vw, 46rem" format="webp" quality={74} />
+        <figcaption>A finished pool and spa.</figcaption>
+      </figure>
+      <figure class="photo">
+        <Image src={shell} alt="Rebar and plumbing laid out for a new pool shell before the concrete is sprayed" widths={[408]} sizes="(max-width: 52rem) 92vw, 24rem" format="webp" quality={80} />
+        <figcaption>Steel and plumbing for a new pool shell, before the concrete.</figcaption>
+      </figure>
+      <div>
+        <h2 class="section-h">What we build</h2>
+        <ul class="list">
+          {remodel.map((s) => <li>{s}</li>)}
+        </ul>
+        <p>
+          More finished jobs are on <a href={biz.instagram} rel="noopener">Instagram</a>. Call or text for an estimate.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band water">
+    <div class="wrap">
+      <h2 class="section-h">From remodel and repair customers</h2>
+      <Reviews topics={["remodel", "repair"]} limit={4} />
+    </div>
+  </section>
+
+  <QuoteSection heading="Get a remodel estimate" service="Remodel or new pool" />
+</Base>

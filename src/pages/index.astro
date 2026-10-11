@@ -1,0 +1,208 @@
+﻿---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Depth from "../components/Depth.astro";
+import Icon from "../components/Icon.astro";
+import Crew from "../components/Crew.astro";
+import PlanTable from "../components/PlanTable.astro";
+import Reviews from "../components/Reviews.astro";
+import Areas from "../components/Areas.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+import greenPool from "../assets/green-pool.jpg";
+import leakingPump from "../assets/leaking-pump.jpg";
+import poolAndSpa from "../assets/pool-and-spa.jpg";
+import { biz, plans, oneTime, repairs, remodel } from "../data/site";
+
+const depths = [
+  { id: "weekly", ft: "3", label: "Weekly service" },
+  { id: "reviews", ft: "4", label: "Reviews" },
+  { id: "cleanups", ft: "5", label: "One-time cleanups" },
+  { id: "repairs", ft: "6", label: "Repairs" },
+  { id: "remodels", ft: "8", label: "Remodels and new pools" },
+];
+---
+<Base
+  title="Skim n' Dip | Weekly Pool Service in Concord and the East Bay"
+  description="Weekly pool and spa service, repairs and remodels across Contra Costa and the Tri-Valley since 2013. 4.9 stars on 140 Google reviews. Call or text (925) 348-5609."
+>
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="copy">
+        <h1 id="hero-h">We skim.<br />You dip.</h1>
+        <p class="lede">
+          Weekly pool and spa service from Concord to Brentwood and Lafayette to Livermore, since 2013. You get a
+          text before every visit and a report with photos after it.
+        </p>
+        <div class="actions">
+          <a class="btn btn-call" href={biz.phoneHref}><Icon name="phone" /> {biz.phone}</a>
+          <a class="btn" href={biz.smsHref}><Icon name="text" /> Text us</a>
+        </div>
+        <p class="rating">
+          <span class="stars" aria-hidden="true">
+            <Icon name="star" /><Icon name="star" /><Icon name="star" /><Icon name="star" /><Icon name="star" />
+          </span>
+          <span><b>{biz.rating}</b> from <a href={biz.googleUrl} rel="noopener">{biz.reviewCount} Google reviews</a></span>
+        </p>
+      </div>
+      <div class="hero-inlay">
+        <figure class="hero-quote">
+          <blockquote>I get a text every week saying they will be here and get another text once they are done.</blockquote>
+          <figcaption><b>Linsey Dicks</b>, Google review</figcaption>
+        </figure>
+        <p>The shallow end:<br /><a href="#weekly">weekly service plans</a></p>
+        <Depth ft="3" />
+      </div>
+    </div>
+  </section>
+
+  <div class="waterline" role="presentation"></div>
+
+  <section class="water crew" aria-labelledby="crew-h">
+    <div class="wrap">
+      <div class="crew-head">
+        <h2 id="crew-h">The people at your pool</h2>
+        <p>
+          Nick started Skim n' Dip in 2013 and still comes out to jobs. Mark runs the office. Customers mention the
+          techs by name in their reviews.
+        </p>
+      </div>
+      <Crew eager />
+    </div>
+  </section>
+
+  <section class="band plaster" id="weekly" aria-labelledby="weekly-h">
+    <div class="wrap">
+      <div class="marker-head">
+        <Depth ft="3" />
+        <h2 id="weekly-h">Weekly service</h2>
+      </div>
+      <div class="plans-intro">
+        <p>
+          Three plans, one visit a week. Every plan covers the water chemistry, an equipment check, filter
+          cleanings three times a year and a report after each visit.
+        </p>
+        <p>
+          The difference is how much of the cleaning you want to do yourself. Not sure which fits your pool?
+          Call or text and ask.
+        </p>
+      </div>
+      <PlanTable />
+    </div>
+  </section>
+
+  <section class="band water" id="reviews" aria-labelledby="reviews-h">
+    <div class="wrap">
+      <div class="marker-head">
+        <Depth ft="4" />
+        <h2 id="reviews-h">What customers say</h2>
+      </div>
+      <Reviews offset={1} />
+    </div>
+  </section>
+
+  <section class="band water profile" aria-labelledby="deeper-h">
+    <div class="wrap">
+      <div class="profile-head">
+        <h2 id="deeper-h">Going deeper</h2>
+        <p>
+          Weekly service is the shallow end. The same crew handles the one-time cleanups, the repairs and the
+          rebuilds, so the company that fixes your pump already knows your pool.
+        </p>
+      </div>
+      <div class="steps">
+        <article class="step" id="cleanups" aria-labelledby="cleanups-h">
+          <div class="marker-head">
+            <Depth ft="5" />
+            <h3 id="cleanups-h">Green pools and one-time cleanups</h3>
+          </div>
+          <figure>
+            <Image src={greenPool} alt="A backyard pool with bright green water and an algae-covered floor before cleanup" widths={[400, 640]} sizes="(max-width: 52rem) 92vw, 22rem" format="webp" quality={72} />
+            <figcaption>A green pool before cleanup. Photo from Skim n' Dip.</figcaption>
+          </figure>
+          <p>Bought a house with a green pool, opening it for summer, or need the spa drained and refilled? One-time visits don't need a weekly plan.</p>
+          <ul class="list">
+            {oneTime.map((s) => <li>{s}</li>)}
+          </ul>
+          <a href="/services#one-time">All one-time services</a>
+        </article>
+
+        <article class="step" id="repairs" aria-labelledby="repairs-h">
+          <div class="marker-head">
+            <Depth ft="6" />
+            <h3 id="repairs-h">Repairs and equipment</h3>
+          </div>
+          <figure>
+            <Image src={leakingPump} alt="A pool pump housing spraying water from a crack, circled in red" widths={[400, 600]} sizes="(max-width: 52rem) 92vw, 22rem" format="webp" quality={75} />
+            <figcaption>A leaking pump, leak circled. Photo from Skim n' Dip.</figcaption>
+          </figure>
+          <p>Noisy pump, leaking filter, heater that won't light? Describe it and we'll diagnose it and quote the fix. Hayward and Pentair warranty station, licensed contractor #{biz.license}.</p>
+          <ul class="list">
+            {repairs.map((s) => <li>{s}</li>)}
+          </ul>
+          <a href="/services#repairs">Repairs and equipment</a>
+        </article>
+
+        <article class="step" id="remodels" aria-labelledby="remodels-h">
+          <div class="marker-head">
+            <Depth ft="8" />
+            <h3 id="remodels-h">Remodels and new pools</h3>
+          </div>
+          <figure>
+            <Image src={poolAndSpa} alt="A finished pool with an attached raised spa and blue glass waterline tile" widths={[400, 640]} sizes="(max-width: 52rem) 92vw, 22rem" format="webp" quality={72} />
+            <figcaption>A finished pool and spa.</figcaption>
+          </figure>
+          <p>Replaster, new waterline tile, drains brought up to code, or a new pool from the ground up, built by the company that will look after it every week.</p>
+          <ul class="list">
+            {remodel.map((s) => <li>{s}</li>)}
+          </ul>
+          <a href="/recent-work">See remodel work</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="waterline" role="presentation"></div>
+
+  <section class="band deckband" id="areas" aria-labelledby="areas-h">
+    <div class="wrap">
+      <h2 id="areas-h" class="section-h">Where we work</h2>
+      <p>Fifteen cities across Contra Costa County and the Tri-Valley. Pick yours to see what's nearby.</p>
+      <Areas />
+    </div>
+  </section>
+
+  <QuoteSection />
+
+  <nav class="gauge" aria-label="Jump to section">
+    {depths.map((d) => <Depth ft={d.ft} label={d.label} href={`#${d.id}`} />)}
+  </nav>
+</Base>
+
+<script>
+  const gauge = document.querySelector<HTMLElement>(".gauge");
+  const links = [...document.querySelectorAll<HTMLAnchorElement>(".gauge a")];
+  const sections = links
+    .map((a) => document.querySelector<HTMLElement>(a.getAttribute("href") ?? ""))
+    .filter((s): s is HTMLElement => !!s);
+  const hero = document.querySelector(".hero");
+  const barDepth = document.querySelector<HTMLElement>(".bar-depth");
+
+  if (gauge && "IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => gauge.classList.toggle("on", !e.isIntersecting)).observe(hero!);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          links.forEach((a) => a.setAttribute("aria-current", String(a.getAttribute("href") === `#${e.target.id}`)));
+          const ft = links.find((a) => a.getAttribute("href") === `#${e.target.id}`)?.dataset.depth;
+          if (barDepth && ft) {
+            barDepth.hidden = false;
+            barDepth.innerHTML = `<b>${ft}</b><small>FT</small>`;
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+</script>

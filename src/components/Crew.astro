@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import { crew } from "../data/site";
+import nick from "../assets/team-nick.jpg";
+import mark from "../assets/team-mark.jpg";
+import ben from "../assets/team-ben.jpg";
+import craig from "../assets/team-craig.jpg";
+import jason from "../assets/team-jason.jpg";
+import andrew from "../assets/team-andrew.jpg";
+
+interface Props {
+  eager?: boolean;
+}
+const { eager = false } = Astro.props;
+const imgs = { "team-nick": nick, "team-mark": mark, "team-ben": ben, "team-craig": craig, "team-jason": jason, "team-andrew": andrew };
+---
+<ul class="crew-grid">
+  {crew.map((p) => (
+    <li>
+      <Image
+        src={imgs[p.img]}
+        alt={`${p.name}, ${p.role.toLowerCase()} at Skim n' Dip`}
+        widths={[240, 400]}
+        sizes="(max-width: 30rem) 50vw, (max-width: 60rem) 33vw, 200px"
+        loading={eager ? "eager" : "lazy"}
+        format="webp"
+        quality={72}
+      />
+      <div class="who"><b>{p.name}</b><span>{p.role}</span></div>
+    </li>
+  ))}
+</ul>

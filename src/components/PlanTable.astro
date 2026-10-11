@@ -1,0 +1,31 @@
+---
+import Icon from "./Icon.astro";
+import { plans, planRows, planFinePrint } from "../data/site";
+---
+<table class="plan-table">
+  <caption class="sr">What each weekly plan includes</caption>
+  <thead>
+    <tr>
+      <th scope="col">Included every week</th>
+      {plans.map((p) => (
+        <th scope="col"><a href={p.href}>{p.short}</a><small>{p.who}</small></th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    {planRows.map((r) => (
+      <tr>
+        <th scope="row">{r.label}{r.note && <small>{r.note}</small>}</th>
+        {r.has.map((h, i) => (
+          <td class={h ? "yes" : "no"}>
+            <Icon name={h ? "check" : "dash"} />
+            <span class="sr">{h ? `Included in ${plans[i].name}` : `Not in ${plans[i].name}`}</span>
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>
+<ul class="fine">
+  {planFinePrint.map((f) => <li>{f}</li>)}
+</ul>

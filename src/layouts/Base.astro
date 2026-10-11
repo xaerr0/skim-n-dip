@@ -1,0 +1,168 @@
+---
+import "@fontsource/big-shoulders-display/700";
+import "@fontsource/big-shoulders-display/800";
+import "@fontsource/big-shoulders-display/900";
+import "@fontsource/atkinson-hyperlegible/400";
+import "@fontsource/atkinson-hyperlegible/700";
+import "../styles/global.css";
+import { getImage } from "astro:assets";
+import bodyFont from "@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2?url";
+import displayFont from "@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff2?url";
+import logo from "../assets/logo.png";
+import ogSrc from "../assets/pool-and-spa.jpg";
+import Icon from "../components/Icon.astro";
+import { biz, nav, cities } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  schema?: Record<string, unknown>[];
+}
+const { title, description, schema = [] } = Astro.props;
+const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+const canonical = new URL(path, biz.site).href;
+const og = await getImage({ src: ogSrc, width: 1200, height: 630, format: "jpeg", fit: "cover" });
+const ogUrl = new URL(og.src, biz.site).href;
+const logoSmall = await getImage({ src: logo, width: 104, format: "webp", quality: 80 });
+const logoFoot = await getImage({ src: logo, width: 160, format: "webp", quality: 80 });
+
+const business = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": `${biz.site}/#business`,
+  name: biz.name,
+  description: "Weekly pool and spa service, equipment repair, remodels and new pools in Contra Costa County and the Tri-Valley.",
+  url: biz.site,
+  telephone: "+1-925-348-5609",
+  email: biz.email,
+  image: ogUrl,
+  logo: new URL("/favicon.png", biz.site).href,
+  foundingDate: String(biz.founded),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: biz.street,
+    addressLocality: biz.city,
+    addressRegion: biz.region,
+    postalCode: biz.zip,
+    addressCountry: "US",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: biz.geo.lat, longitude: biz.geo.lng },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "16:30",
+    },
+  ],
+  areaServed: cities.map((c) => ({ "@type": "City", name: `${c.name}, CA` })),
+  sameAs: [biz.instagram, biz.googleUrl],
+};
+
+const isCurrent = (item: (typeof nav)[number]) =>
+  (item.match ?? [item.href]).some((m) => path === m);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0c5070" />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={biz.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(business)} />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src={logoSmall.src} width="52" height="49" alt="" />
+          <span>Skim n' Dip</span>
+        </a>
+        <nav aria-label="Main">
+          <ul class="nav" id="nav">
+            {nav.map((item) => (
+              <li><a href={item.href} aria-current={isCurrent(item) ? "page" : undefined}>{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <a class="header-call" href={biz.phoneHref}>{biz.phone}</a>
+        <button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false">
+          <Icon name="menu" /> Menu
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer water abyss">
+      <div class="wrap">
+        <img src={logoFoot.src} width="80" height="75" alt="Skim n' Dip logo" loading="lazy" />
+        <a class="call" href={biz.phoneHref}>{biz.phone}</a>
+        <p>Call or text. The office answers {biz.hours}.</p>
+        <p>
+          <a href={biz.googleUrl} rel="noopener">{biz.street}, {biz.city}, {biz.region} {biz.zip}</a>
+          <br /><a href={`mailto:${biz.email}`}>{biz.email}</a>
+        </p>
+        <ul class="links">
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href={biz.instagram} rel="noopener">Instagram</a></li>
+        </ul>
+        <p class="small">
+          California contractor license <a href={biz.licenseUrl} rel="noopener">#{biz.license}</a>.
+          Hayward and Pentair warranty station. Serving the East Bay since {biz.founded}.
+        </p>
+        <p class="small">&copy; {new Date().getFullYear()} {biz.name}</p>
+      </div>
+    </footer>
+
+    <nav class="action-bar" aria-label="Quick contact">
+      <span class="bar-depth depth" aria-hidden="true" hidden></span>
+      <a class="call" href={biz.phoneHref}><Icon name="phone" /> Call</a>
+      <a href={biz.smsHref}><Icon name="text" /> Text</a>
+      <a href="/contact#quote"><Icon name="quote" /> Quote</a>
+    </nav>
+
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>(".menu-btn");
+      const list = document.getElementById("nav");
+      btn?.addEventListener("click", () => {
+        const open = list?.classList.toggle("open") ?? false;
+        btn.setAttribute("aria-expanded", String(open));
+      });
+
+      document.querySelectorAll<HTMLFormElement>("[data-demo-form]").forEach((form) => {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const status = form.querySelector<HTMLElement>(".form-status");
+          if (!status) return;
+          status.hidden = false;
+          status.textContent =
+            "This is a demo, so the form isn't connected yet. Please call or text (925) 348-5609 and the office will get you a quote.";
+          status.focus?.();
+        });
+      });
+    </script>
+  </body>
+</html>

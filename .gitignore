@@ -11,3 +11,7 @@ node_modules/
 
 # private pitch notes
 CALL-SCRIPT.md
+dist/
+.wrangler/
+.astro/
+recon/wix-originals/

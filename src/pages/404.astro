@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import Depth from "../components/Depth.astro";
+import Icon from "../components/Icon.astro";
+import { biz } from "../data/site";
+---
+<Base title="Page not found | Skim n' Dip" description="This page doesn't exist. Find weekly pool service, repairs and remodels from Skim n' Dip.">
+  <section class="page-head">
+    <div class="wrap">
+      <div class="marker-head">
+        <Depth ft="0" />
+        <h1>Nothing in this end of the pool</h1>
+      </div>
+      <p class="lede">That page doesn't exist, or it moved when the site was rebuilt.</p>
+      <div class="actions">
+        <a class="btn" href="/">Back to the home page</a>
+        <a class="btn" href="/services">Pool services</a>
+        <a class="btn btn-call" href={biz.phoneHref}><Icon name="phone" /> {biz.phone}</a>
+      </div>
+    </div>
+  </section>
+  <div class="waterline" role="presentation"></div>
+</Base>

@@ -1,0 +1,15 @@
+# Old Wix addresses that moved. 301 passes their search ranking to the new page.
+/services-5                                     /service-areas   301
+/copy-of-services                               /chem-plus       301
+/service-packages/chemical-plus                 /chem-plus       301
+/service-packages/chem-only                     /chemical-only   301
+/service-packages/chems%2C-bags-%26-baskets     /chems-bags-baskets  301
+/service-packages/*                             /services        301
+/service-page/chemical-plus-weekly-service      /chem-plus       301
+/service-page/equipment-repair                  /services#repairs   301
+/service-page/one-time-services                 /services#one-time  301
+/service-page/pool-equipment-upgrades           /services#repairs   301
+/book-online                                    /contact         301
+
+# Wix template filler (/product-page/*, /clients, /features, /blog) is left to 404 on purpose:
+# those pages were placeholder content and should drop out of Google.

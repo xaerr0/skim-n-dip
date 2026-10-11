@@ -1,0 +1,27 @@
+﻿---
+import QuoteForm from "./QuoteForm.astro";
+import { biz } from "../data/site";
+interface Props {
+  city?: string;
+  heading?: string;
+  service?: string;
+}
+const { city, heading = "Get a quote", service } = Astro.props;
+---
+<section class="band water deep" id="quote" aria-labelledby="quote-h">
+  <div class="wrap quote">
+    <div>
+      <h2 id="quote-h">{heading}</h2>
+      <p>
+        Tell us about your pool and the office will text or call you back with a price. If it's faster, just
+        call or text the same number.
+      </p>
+      <ul class="contact-lines">
+        <li><b>Call or text</b><a href={biz.phoneHref}>{biz.phone}</a></li>
+        <li><b>Email</b><a href={`mailto:${biz.email}`}>{biz.email}</a></li>
+        <li><b>Office hours</b>{biz.hours}</li>
+      </ul>
+    </div>
+    <QuoteForm city={city} service={service} />
+  </div>
+</section>

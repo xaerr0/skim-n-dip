@@ -1,0 +1,20 @@
+---
+interface Props {
+  ft: string;
+  label?: string;
+  href?: string;
+  current?: boolean;
+}
+const { ft, label, href, current } = Astro.props;
+const Tag = href ? "a" : "span";
+---
+<Tag
+  class="depth"
+  href={href}
+  aria-label={label ? `${label}, ${ft} feet` : undefined}
+  aria-hidden={label ? undefined : "true"}
+  aria-current={href ? (current ? "true" : "false") : undefined}
+  data-depth={ft}
+>
+  <b>{ft}</b><small>FT</small>
+</Tag>

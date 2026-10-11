@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Depth from "../components/Depth.astro";
+import PlanTable from "../components/PlanTable.astro";
+import Reviews from "../components/Reviews.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+import { cities, cityBySlugName, oneTime, repairs, type City } from "../data/site";
+
+export function getStaticPaths() {
+  return cities.map((c, i) => ({ params: { city: c.slug }, props: { c, i } }));
+}
+
+const { c, i } = Astro.props as { c: City; i: number };
+const near = c.near.map(cityBySlugName).filter((x): x is City => !!x);
+const elsewhere = cities.filter((x) => x.region === c.region && x.name !== c.name && !c.near.includes(x.name));
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: `Weekly pool service in ${c.name}, CA`,
+  serviceType: "Pool cleaning and maintenance",
+  provider: { "@id": "https://www.skimndipllc.com/#business" },
+  areaServed: { "@type": "City", name: `${c.name}, CA` },
+};
+---
+<Base
+  title={`Pool Service in ${c.name}, CA | Skim n' Dip`}
+  description={`Weekly pool cleaning and service in ${c.name}, CA from Skim n' Dip: three weekly plans, repairs and green pool cleanups. 4.9 stars on Google. Call (925) 348-5609.`}
+  schema={[service]}
+>
+  <PageHead title={`Pool service in ${c.name}`} crumbs={[{ href: "/service-areas", label: "Service areas" }]}>
+    <p>
+      Weekly pool and spa service for homes in {c.name}, plus repairs, one-time cleanups and remodels.
+      {c.name} is part of our {c.region} routes, run out of our office in Concord.
+    </p>
+  </PageHead>
+
+  <section class="band plaster" aria-labelledby="plans-h">
+    <div class="wrap">
+      <div class="marker-head">
+        <Depth ft="3" />
+        <h2 id="plans-h">Weekly plans in {c.name}</h2>
+      </div>
+      <PlanTable />
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="more-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="more-h" class="section-h">Beyond the weekly visit</h2>
+        <h3>One-time</h3>
+        <ul class="list">{oneTime.slice(0, 5).map((s) => <li>{s}</li>)}</ul>
+        <h3>Repairs</h3>
+        <ul class="list">{repairs.slice(0, 5).map((s) => <li>{s}</li>)}</ul>
+        <p><a href="/services">All services</a></p>
+      </div>
+      <div>
+        <h2 class="section-h">Near {c.name}</h2>
+        <p>We also service pools in:</p>
+        <ul class="near">
+          {near.map((n) => <li><a href={`/${n.slug}`}>{n.name}</a></li>)}
+        </ul>
+        {elsewhere.length > 0 && (
+          <>
+            <p class="mt">Elsewhere in {c.region}:</p>
+            <ul class="near">
+              {elsewhere.map((n) => <li><a href={`/${n.slug}`}>{n.name}</a></li>)}
+            </ul>
+          </>
+        )}
+        <p class="mt"><a href="/service-areas">All 15 service areas</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band water" aria-labelledby="rev-h">
+    <div class="wrap">
+      <h2 id="rev-h" class="section-h">What customers say</h2>
+      <Reviews limit={3} offset={i * 3} />
+    </div>
+  </section>
+
+  <QuoteSection city={c.name} heading={`Get a quote in ${c.name}`} />
+</Base>

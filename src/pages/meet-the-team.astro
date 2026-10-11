@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import { crew } from "../data/site";
+import nick from "../assets/team-nick.jpg";
+import mark from "../assets/team-mark.jpg";
+import ben from "../assets/team-ben.jpg";
+import craig from "../assets/team-craig.jpg";
+import jason from "../assets/team-jason.jpg";
+import andrew from "../assets/team-andrew.jpg";
+const imgs = { "team-nick": nick, "team-mark": mark, "team-ben": ben, "team-craig": craig, "team-jason": jason, "team-andrew": andrew };
+
+// What customers wrote about specific people (Google reviews, verbatim).
+const said: Record<string, { text: string; by: string }> = {
+  "Nick Eisenbart": { text: "Nick was on site both days making sure there were no complications and giving us expert advice.", by: "Carol Roeder" },
+  Craig: { text: "Our weekly technician, Craig, is punctual, friendly, and keeps the water clear and baskets cleaned out.", by: "Katie Niemann" },
+  Andrew: { text: "They understand what the size of my pool needed, sent Andrew, who did his work with precision.", by: "Kerry Hill" },
+};
+---
+<Base
+  title="Meet the Team | Skim n' Dip Pool Service"
+  description="The people behind Skim n' Dip: owner Nick Eisenbart, office manager Mark Ray, service techs Ben, Craig and Jason, and repair and install tech Andrew."
+>
+  <PageHead title="Meet the team" crumbs={[{ href: "/about", label: "About" }]}>
+    <p>Six people, one office in Concord. These are the faces you'll see at your gate and hear on the phone.</p>
+  </PageHead>
+
+  <section class="band water">
+    <div class="wrap">
+      <ul class="team">
+        {crew.map((p) => (
+          <li>
+            <Image src={imgs[p.img]} alt={`${p.name}, ${p.role.toLowerCase()} at Skim n' Dip`} widths={[320, 520]} sizes="(max-width: 40rem) 92vw, 22rem" format="webp" quality={72} />
+            <div>
+              <h2>{p.name}</h2>
+              <p class="role">{p.role}</p>
+              {"note" in p && <p>{p.note}.</p>}
+              {said[p.name] && (
+                <blockquote>
+                  &ldquo;{said[p.name].text}&rdquo;
+                  <cite>{said[p.name].by}, Google review</cite>
+                </blockquote>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,23 @@
+---
+import { reviews, biz, type Review } from "../data/site";
+interface Props {
+  topics?: Review["topic"][];
+  limit?: number;
+  offset?: number;
+}
+const { topics, limit = 6, offset = 0 } = Astro.props;
+const pool = topics ? reviews.filter((r) => topics.includes(r.topic)) : reviews;
+const list = Array.from({ length: Math.min(limit, pool.length) }, (_, i) => pool[(offset + i) % pool.length]);
+---
+<ul class="quotes">
+  {list.map((r) => (
+    <li>
+      <blockquote>{r.text}</blockquote>
+      <cite><b>{r.name}</b>, Google review, {r.when}</cite>
+    </li>
+  ))}
+</ul>
+<p class="review-foot">
+  {biz.rating} out of 5 from {biz.reviewCount} reviews.
+  <a href={biz.googleUrl} rel="noopener">Read them all on Google</a>
+</p>

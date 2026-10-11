@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Depth from "../components/Depth.astro";
+import PlanTable from "../components/PlanTable.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+import greenPool from "../assets/green-pool.jpg";
+import leakingPump from "../assets/leaking-pump.jpg";
+import { biz, plans, oneTime, repairs, remodel } from "../data/site";
+---
+<Base
+  title="Pool Maintenance, Repair and Remodel Services | Skim n' Dip"
+  description="Weekly pool plans, one-time cleanups, green pool recovery, equipment repair and remodels from Skim n' Dip, a licensed Hayward and Pentair warranty station in the East Bay."
+>
+  <PageHead title="Pool services">
+    <p>
+      Everything from the weekly visit to a full replaster, done by one crew based in Concord. Licensed
+      California contractor #{biz.license} and a Hayward and Pentair warranty station.
+    </p>
+  </PageHead>
+
+  <section class="band plaster" id="weekly" aria-labelledby="weekly-h">
+    <div class="wrap">
+      <div class="marker-head">
+        <Depth ft="3" />
+        <h2 id="weekly-h">Weekly service</h2>
+      </div>
+      <div class="plans-intro">
+        <p>Three plans with one visit a week. They share the water chemistry, the equipment check, the filter cleanings and the report after each visit.</p>
+        <p>They differ in how much of the cleaning the tech does. Open a plan for the details: {plans.map((p, i) => <><a href={p.href}>{p.name}</a>{i < plans.length - 1 ? ", " : "."}</>)}</p>
+      </div>
+      <PlanTable />
+    </div>
+  </section>
+
+  <section class="band water" id="one-time" aria-labelledby="one-time-h">
+    <div class="wrap two">
+      <div>
+        <div class="marker-head">
+          <Depth ft="5" />
+          <h2 id="one-time-h">One-time services</h2>
+        </div>
+        <p>
+          Green pool? Dirty pool? Opening a pool after the winter or after buying the house? These visits are booked
+          on their own, no weekly plan needed.
+        </p>
+        <ul class="list">
+          {oneTime.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+      <figure class="photo">
+        <Image src={greenPool} alt="A backyard pool with bright green water before cleanup" widths={[400, 640]} sizes="(max-width: 52rem) 92vw, 30rem" format="webp" quality={72} loading="lazy" />
+        <figcaption>A green pool before cleanup. Photo from Skim n' Dip.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band water deep" id="repairs" aria-labelledby="repairs-h">
+    <div class="wrap two">
+      <div>
+        <div class="marker-head">
+          <Depth ft="6" />
+          <h2 id="repairs-h">Equipment repair and upgrades</h2>
+        </div>
+        <p>
+          Noisy pump, leaking filter, heater not working? We diagnose the problem and quote the repair. Warranty work
+          on Hayward and Pentair equipment is done in-house.
+        </p>
+        <ul class="list">
+          {repairs.map((s) => <li>{s}</li>)}
+        </ul>
+        <p class="callout">
+          A high PG&amp;E bill can come from an old pump or heater. Newer energy-efficient models use less power. Ask
+          for a quote on an upgrade.
+        </p>
+      </div>
+      <figure class="photo">
+        <Image src={leakingPump} alt="A pool pump housing spraying water from a crack, circled in red" widths={[400, 600]} sizes="(max-width: 52rem) 92vw, 30rem" format="webp" quality={75} loading="lazy" />
+        <figcaption>A leaking pump, leak circled. Photo from Skim n' Dip.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band water abyss" id="remodel" aria-labelledby="remodel-h">
+    <div class="wrap two">
+      <div>
+        <div class="marker-head">
+          <Depth ft="8" />
+          <h2 id="remodel-h">Remodels and construction</h2>
+        </div>
+        <p>
+          New pool, remodel of an old one, or resurfacing. Tell us what you have in mind and we'll put together an
+          estimate.
+        </p>
+        <ul class="list">
+          {remodel.map((s) => <li>{s}</li>)}
+        </ul>
+        <a class="btn" href="/recent-work">See remodel work</a>
+      </div>
+      <figure class="pull">
+        <blockquote>
+          Skim N' Dip did a wonderful job renovating our pool. We purchased our house last year and were informed that
+          the pool was in need of a replaster, new waterline tiles alongside bringing the drains up to code.
+        </blockquote>
+        <figcaption><b>Erica Butler</b>, Google review</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <QuoteSection />
+</Base>

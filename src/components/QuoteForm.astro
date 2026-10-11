@@ -1,0 +1,62 @@
+﻿---
+import { cities } from "../data/site";
+interface Props {
+  city?: string;
+  id?: string;
+  service?: string;
+}
+const { city, id = "quote-form", service = "Weekly service" } = Astro.props;
+const services = [
+  "Weekly service",
+  "One-time cleaning",
+  "Green pool recovery",
+  "Pool start-up",
+  "Equipment repair or install",
+  "Remodel or new pool",
+];
+---
+<form class="form" id={id} action="#" method="post" data-demo-form>
+  <div>
+    <label for={`${id}-name`}>Name</label>
+    <input id={`${id}-name`} name="name" autocomplete="name" required />
+  </div>
+  <div>
+    <label for={`${id}-phone`}>Phone</label>
+    <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+  </div>
+  <div>
+    <label for={`${id}-email`}>Email <span class="opt">(optional)</span></label>
+    <input id={`${id}-email`} name="email" type="email" autocomplete="email" />
+  </div>
+  <div>
+    <label for={`${id}-city`}>City</label>
+    <select id={`${id}-city`} name="city" autocomplete="address-level2">
+      <option value="">Choose your city</option>
+      {cities.map((c) => <option selected={c.name === city}>{c.name}</option>)}
+      <option>Somewhere else</option>
+    </select>
+  </div>
+  <fieldset class="full">
+    <legend>What do you need?</legend>
+    <div class="checks">
+      {services.map((s, i) => (
+        <label><input type="checkbox" name="service" value={s} checked={s === service} /> {s}</label>
+      ))}
+    </div>
+  </fieldset>
+  <div class="full">
+    <label for={`${id}-msg`}>Anything we should know? <span class="opt">(optional)</span></label>
+    <textarea id={`${id}-msg`} name="message" placeholder="Pool size, salt or chlorine, what's going on with it"></textarea>
+  </div>
+  <div class="full">
+    <label for={`${id}-pref`}>Best way to reach you</label>
+    <select id={`${id}-pref`} name="contact_pref">
+      <option>Text message</option>
+      <option>Phone call</option>
+      <option>Email</option>
+    </select>
+  </div>
+  <button class="btn btn-call full" type="submit">Send my quote request</button>
+  <p class="form-note full">The office answers Monday to Friday, 8 AM to 4:30 PM.</p>
+  <p class="form-status" role="status" hidden></p>
+</form>

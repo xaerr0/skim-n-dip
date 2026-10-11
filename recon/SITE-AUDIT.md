@@ -101,6 +101,19 @@ Other URLs to keep or 301-redirect: `/about`, `/meet-the-team`, `/services-5` (s
 - Messy slugs left over from Wix page duplication: `/services-5` for Service Areas, `/copy-of-services`. `/meet-the-team` and `/contact` use the title "We Skim, You Dip!" and have no meta description; `/services-5` has none either.
 - Contact email is a Gmail address (`Skimndip@Gmail.com`), not one on the business domain.
 
+### Found in the sitemap (added 2026-10-11)
+
+`/sitemap.xml` lists 49 URLs, not the 26 in the menu. Several are Wix template leftovers that Google is being asked to index:
+
+- **12 placeholder store pages**, `/product-page/i-m-a-product` through `/product-page/i-m-a-product-11`, each titled "I'm a product | Skim n' Dip, LLC" with "Return & refund policy" and "Shipping info" sections.
+- **`/clients`** lists four fake template clients ("AXES", "VOLVE", "SOVIX", "POLAR") with the text "This is your Client description. Utilize this space to give background on the client".
+- **`/features`** says "OPEN 7 DAYS A WEEK" and "Truly Top-Notch". The Google listing shows the business closed on weekends.
+- **`/services-5`** (the Service Areas page in the menu) still contains "This is a Paragraph. Click on "Edit Text" or double click on the text box to start editing the content."
+- **`/blog`** is an empty blog.
+- **The three `/service-packages/` pages** show the license as "Licensed Contractor (lic.00000000)", a placeholder number, while the visible package pages show the real one (1072978).
+- **Two different addresses.** `/contact` lists 251 Arthur Rd, Martinez, CA. The Google listing and the site's own structured data say 3311 Concord Blvd, Concord.
+- `/service-page/*` and `/book-online` are Wix Bookings pages ("1 hr", "Price Varies") that duplicate the package pages.
+
 ## Google Business Profile
 
 Checked on Google Maps (search "Skim n Dip pool Concord CA").

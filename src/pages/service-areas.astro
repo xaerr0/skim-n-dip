@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Areas from "../components/Areas.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+---
+<Base
+  title="Pool Service Areas: Contra Costa and Tri-Valley | Skim n' Dip"
+  description="Skim n' Dip services pools in 15 East Bay cities, from Concord, Walnut Creek and Danville to Pleasanton, Livermore, Antioch, Brentwood and Discovery Bay."
+>
+  <PageHead title="Service areas">
+    <p>
+      Weekly routes run out of Concord to 15 cities across Contra Costa County and the Tri-Valley. Not on the list?
+      Call or text and ask.
+    </p>
+  </PageHead>
+
+  <section class="band water">
+    <div class="wrap">
+      <Areas />
+    </div>
+  </section>
+
+  <QuoteSection />
+</Base>

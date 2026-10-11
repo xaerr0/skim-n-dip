@@ -1,0 +1,31 @@
+---
+import Depth from "./Depth.astro";
+import Icon from "./Icon.astro";
+import { biz } from "../data/site";
+interface Props {
+  title: string;
+  ft?: string;
+  crumbs?: { href: string; label: string }[];
+}
+const { title, ft, crumbs = [] } = Astro.props;
+---
+<section class="page-head">
+  <div class="wrap">
+    {crumbs.length > 0 && (
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        {crumbs.map((c) => <> / <a href={c.href}>{c.label}</a></>)}
+      </nav>
+    )}
+    <div class="marker-head">
+      {ft && <Depth ft={ft} />}
+      <h1>{title}</h1>
+    </div>
+    <div class="lede"><slot /></div>
+    <div class="actions">
+      <a class="btn btn-call" href={biz.phoneHref}><Icon name="phone" /> {biz.phone}</a>
+      <a class="btn" href={biz.smsHref}><Icon name="text" /> Text us</a>
+    </div>
+  </div>
+</section>
+<div class="waterline" role="presentation"></div>

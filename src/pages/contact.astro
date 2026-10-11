@@ -1,0 +1,39 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import QuoteSection from "../components/QuoteSection.astro";
+import { biz } from "../data/site";
+---
+<Base
+  title="Contact Skim n' Dip | Call or Text (925) 348-5609"
+  description="Call or text Skim n' Dip at (925) 348-5609, Monday to Friday 8 AM to 4:30 PM, or send a quote request for weekly pool service, repairs or a remodel."
+>
+  <PageHead title="Contact">
+    <p>
+      Calling or texting is the fastest way to reach the office, open {biz.hours}. You can also send the form
+      below.
+    </p>
+  </PageHead>
+
+  <section class="band plaster">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Call or text</h2>
+        <p><a class="big-link" href={biz.phoneHref}>{biz.phone}</a></p>
+      </div>
+      <div>
+        <h2>Email</h2>
+        <p><a class="big-link" href={`mailto:${biz.email}`}>{biz.email}</a></p>
+      </div>
+      <div>
+        <h2>Office</h2>
+        <p>
+          <a href={biz.googleUrl} rel="noopener">{biz.street}<br />{biz.city}, {biz.region} {biz.zip}</a><br />
+          {biz.hours}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <QuoteSection heading="Send a quote request" />
+</Base>
