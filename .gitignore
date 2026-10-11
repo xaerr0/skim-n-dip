@@ -1,0 +1,13 @@
+﻿.playwright-mcp/
+.impeccable/
+.claude/settings.local.json
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+node_modules/
+.env
+.env.*
+
+# private pitch notes
+CALL-SCRIPT.md
